@@ -13,17 +13,29 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as ShopsShopImport } from './routes/shops/$shop'
 
 // Create Virtual Routes
 
+const CartLazyImport = createFileRoute('/cart')()
 const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
+
+const CartLazyRoute = CartLazyImport.update({
+  path: '/cart',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/cart.lazy').then((d) => d.Route))
 
 const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+
+const ShopsShopRoute = ShopsShopImport.update({
+  path: '/shops/$shop',
+  getParentRoute: () => rootRoute,
+} as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -33,11 +45,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
+    '/cart': {
+      preLoaderRoute: typeof CartLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/shops/$shop': {
+      preLoaderRoute: typeof ShopsShopImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren([IndexLazyRoute])
+export const routeTree = rootRoute.addChildren([
+  IndexLazyRoute,
+  CartLazyRoute,
+  ShopsShopRoute,
+])
 
 /* prettier-ignore-end */

@@ -1,0 +1,19 @@
+.header {
+    display: flex;
+    gap: 20px;
+    padding: 10px 20px;
+    border-bottom: 1px solid #000;
+}
+
+.link {
+    transition: scale .3s;
+    
+    &:hover {
+        scale: 1.2;
+    }
+}
+
+.cart {
+    width: 25px;
+    height: 25px;
+}
