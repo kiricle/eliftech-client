@@ -1,4 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
+import { Shops } from '../../components/Shops/Shops';
+import styles from '../index.module.scss';
+import { Catalog } from '../../components/Catalog/Catalog';
 
 export const Route = createFileRoute('/shops/$shop')({
     component: Shop,
@@ -7,5 +10,10 @@ export const Route = createFileRoute('/shops/$shop')({
 function Shop() {
     const { shop } = Route.useParams();
 
-    return <h2>{shop}</h2>;
+    return (
+        <main className={styles.main}>
+            <Shops />
+            <Catalog />
+        </main>
+    );
 }
