@@ -6,8 +6,8 @@ export const Route = createLazyFileRoute('/cart')({
 
 function CartPage() {
     return (
-        <div>
+        <main>
             <h1>Cart Page</h1>
-        </div>
+        </main>
     );
 }
