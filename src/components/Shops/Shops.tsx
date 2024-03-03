@@ -1,23 +1,19 @@
 import { Link } from '@tanstack/react-router';
 import styles from './Shops.module.scss';
 
-export const Shops = () => {
+export const Shops = ({ shops }: { shops: Shop[] }) => {
     return (
         <nav className={styles.shops}>
-            <Link
-                className={styles.link}
-                to="/shops/$shop"
-                params={{ shop: 'drugs-24' }}
-            >
-                Drugs 24
-            </Link>
-            <Link
-                className={styles.link}
-                to="/shops/$shop"
-                params={{ shop: 'pharmacy' }}
-            >
-                Pharmacy
-            </Link>
+            {shops.map(({ href, id, name }) => (
+                <Link
+                    key={id}
+                    className={styles.link}
+                    to="/shops/$shop"
+                    params={{ shop: href }}
+                >
+                    {name}
+                </Link>
+            ))}
         </nav>
     );
 };
